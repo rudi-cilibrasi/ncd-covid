@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+DIRNAME=/tmp/zdir-$$
+
+mkdir $DIRNAME
+cp $1 $DIRNAME/z
+rm -f arc.zpaq
+pushd . >&/dev/null
+cd $DIRNAME
+zp c3 arc z >&/dev/null
+RAWCOUNT=$(wc -c < arc.zpaq)
+echo $((RAWCOUNT-238))
+popd >&/dev/null
+rm -rf $DIRNAME

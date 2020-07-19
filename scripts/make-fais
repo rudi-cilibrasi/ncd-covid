@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+
+set -e
+
+function remove_fais {
+	for i in $(find $TOPDATADIR/incoming -name \*.fasta.fai) ; do
+		rm -f $i
+	done
+}
+
+function make_all_fais {
+	for i in $(find $TOPDATADIR/incoming -name \*.fasta) ; do
+		test -f $i.fai || fastahack -i $i
+	done
+}
+
+source $(dirname $0)/../config/env.sh
+
+cd $TOPDATADIR
+
+SUMMARY_NAME=$TOPDATADIR/summaries/summary-01-input-data.txt
+echo "Original input data:" > $SUMMARY_NAME
+ls -lh incoming/*.zip incoming/*.fasta >> $SUMMARY_NAME
+GISAID_SEQ_COUNT=$(cat $TOPDATADIR/incoming/gisaid*.fasta.fai | wc -l)
+GURJIT_SEQ_FAI=$(find $TOPDATADIR/incoming/gur* -name \*.fasta.fai)
+GURJIT_SEQ_COUNT=$(cat $GURJIT_SEQ_FAI | wc -l)
+echo "GISAID sequences downloaded July 17th, 2020" >> $SUMMARY_NAME
+echo "Total GISAID sequences: $GISAID_SEQ_COUNT" >> $SUMMARY_NAME
+echo "Total Gurjit sequences: $GURJIT_SEQ_COUNT" >> $SUMMARY_NAME
+echo '--------------------------------------------------------------------------' >> $SUMMARY_NAME
+make_all_fais
+exit 0

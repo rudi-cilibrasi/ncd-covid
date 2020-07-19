@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+set -e
+DIRNAME=fullpackage
+PACKAGENAME=fullpackage-v0-9-0.tar.gz
+source $(dirname $0)/../config/env.sh
+
+rm -rf $DIRNAME
+mkdir $DIRNAME
+cp $TOPDATADIR/intermediate/first* $DIRNAME
+cp $TOPDATADIR/intermediate/second* $DIRNAME
+cp $TOPDATADIR/intermediate/table* $DIRNAME
+cat $TOPDATADIR/summaries/* > $DIRNAME/summary.txt
+tar cvfz $PACKAGENAME fullpackage/
+rm -rf $DIRNAME
+echo "made package $PACKAGENAME"
+tar tvfz $PACKAGENAME
+exit 0
