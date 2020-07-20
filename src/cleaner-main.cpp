@@ -53,6 +53,9 @@ int main(int argc, char **argv)
         }
         auto histo = computeStringSummaryHistogram(value);
         if (histo != "acgt") {
+//            cout << "WARNING: rejecting sequence " << key << "\n";
+//            cout << "WARNING histo:" << histo << "\n";
+//            cout << "WARNING SEQUENCE:" << value << "\n";
             continue;
         }
         if (source == Gurjit) {
