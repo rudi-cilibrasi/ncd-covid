@@ -29,6 +29,8 @@ int main(int argc, char **argv) {
     string worstName;
     NameAndCRC worstNameAndCRC;
     string worstSequence;
+    int retainedGisaidCount = 0;
+    double retainedGisaidSum = 0.0f;
     // CachingCompressor::instance().removeTag("15428970192809444366/15292229339988812524");
     for (auto it = snh.nameToCRC.begin(); it != snh.nameToCRC.end(); ++it) {
         auto k = (*it).first;
@@ -40,7 +42,7 @@ int main(int argc, char **argv) {
         NameAndCRC nameAndCRC;
         nameAndCRC.name = k;
         nameAndCRC.crc = crc;
-        if (k.find("MN908947") != string::npos) {
+        if (k.find("MN908947") != string::npos || nameAndCRC.crc == skSelected) {
             sortedList.addEntry(nameAndCRC);
             donelist.insert(crc);
         }
@@ -73,6 +75,8 @@ int main(int argc, char **argv) {
                 worstCRC = crc;
                 worstNameAndCRC = nameAndCRC;
             }
+            retainedGisaidCount += 1;
+            retainedGisaidSum += curncd;
         }
     }
     auto filename = getDataFilename("summaries/summary-04-worst.txt");
@@ -80,6 +84,8 @@ int main(int argc, char **argv) {
     outfile << "Worst NCD: " << worstNCD << "\n";
     outfile << "Worst CRC: " << worstCRC << "\n";
     outfile << "Worst Name: " << worstNameAndCRC.name << "\n";
+    outfile << "Total retained sequences: " << retainedGisaidCount << '\n';
+    outfile << "Average NCD retained seq: " << retainedGisaidSum/retainedGisaidCount << '\n';
     outfile << "Display Worst Name: " << smartName(worstNameAndCRC) << "\n";
 //    outfile << "Worst sequence: " << worstSequence << "\n";
     filename = getDataFilename("summaries/summary-05-github-uri.txt");
