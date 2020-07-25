@@ -1,6 +1,15 @@
 # ncd-covid
 Coronavirus (COVID) genetic analysis using Normalized Compression Distance (NCD)
 
+# scientific basis
+
+https://www.biorxiv.org/content/10.1101/2020.07.22.216242v1
+Phylogeny of the COVID-19 Virus SARS-CoV-2 by Compression
+Paul M B Vitanyi, Rudi L Cilibrasi
+
+The code in this repository was used to make the calculations in the linked
+article.
+
 # building
 
 ```
