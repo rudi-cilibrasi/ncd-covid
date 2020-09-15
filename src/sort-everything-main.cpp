@@ -63,11 +63,12 @@ int main(int argc, char **argv) {
             sortedList.addEntry(nameAndCRC);
             donelist.insert(crc);
         }
-        if (k.find("/2017") == string::npos &&
-            k.find("/2018") == string::npos &&
-            k.find("/2019") == string::npos && classifyFAIorFastaFilename(k) == Gisaid &&
-            k.find("hCoV") != string::npos &&
-            k.find("hCoV-19/bat") == string::npos
+        if (classifyFAIorFastaFilename(k) == Gisaid // &&
+//						k.find("/2017") == string::npos &&
+//            k.find("/2018") == string::npos &&
+//            k.find("/2019") == string::npos &&
+//            k.find("hCoV") != string::npos  &&
+//            k.find("hCoV-19/bat") == string::npos
             ) {
             auto curncd = ncdHelper.getNCD(skSelected, crc);
             if (curncd >= worstNCD) {
@@ -75,6 +76,7 @@ int main(int argc, char **argv) {
                 worstCRC = crc;
                 worstNameAndCRC = nameAndCRC;
             }
+						// donelist.insert(crc);
             retainedGisaidCount += 1;
             retainedGisaidSum += curncd;
         }
